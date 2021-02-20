@@ -24,6 +24,8 @@ import vn.hus.nlp.tokenizer.tokens.TaggedWord;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -61,7 +63,7 @@ public class VietnameseTokenizer extends Tokenizer {
     }
 
     @Override
-    public final boolean incrementToken() throws IOException {
+    public final boolean  incrementToken() throws IOException {
         while (pending.size() == 0) {
             tokenize();
             if (pending.size() == 0) {
@@ -83,7 +85,7 @@ public class VietnameseTokenizer extends Tokenizer {
                 int lengthChange = length;
 
                 // fix same word phrase and multi space bug
-                if(word.getText().indexOf(" ") < 0) {
+                if (word.getText().indexOf(" ") < 0) {
                     startChange = inputText.indexOf(word.getText(), offset);
                 } else {
                     // fix multi space bug
